@@ -1,0 +1,27 @@
+html{background-color:#FFF;}
+.pay_info{ width:100%;  position:relative; top:0px; }
+.pay_info .pic{ width:100%; margin:0 auto; text-align:center; }
+.pay_info .pic img{ width:94px; height:94px; margin:70px auto 10px; }
+.pay_info .pic .info{ font:400 24px/28px 'Microsoft YaHei'; color:#222; margin:0 0 3px;}
+.pay_info .pic .info_etc{ font:400 14px/28px 'Microsoft YaHei'; color:#7a7a7a; width:70%; margin:0 auto; }
+.pay_info .pic .info_etc2{ font:400 14px/22px 'Microsoft YaHei'; color:#7a7a7a; width:80%; margin:6px auto 0; }
+.pay_info .pic .info_etc2 .red{ color:#ff5b5b;font-weight:bold; font-size:16px;}
+.pay_info .pic .info2{ font:400 18px/28px 'Microsoft YaHei'; color:#222; margin:0 auto 3px; width:70%;}
+
+
+
+.infos{ text-align:left; overflow:hidden; color:#949494; width:96%; font-size:12px; clear:both; margin:0 0 0 3.5%}
+.infos .red{ color:#ec4f39; font-weight:bold; font-size:13px; margin:0 1px;}
+
+.action{ width:100%; height:130px; position:absolute; top:410px;  }
+.action .btn-pay{margin-top:16px;font-size:17px;display:block; width:93%;  color:#ffffff; background:#ec4f39; border:none; height:47px; font-family:microsoft yahei; margin:15px auto 25px; text-align:center; line-height:47px; border-radius:4px; }
+.action .btn-pay a{ text-decoration:none;}
+.action .btn-pay:active{background:#e7412e;}
+.action .tis{ margin:0 auto; text-align:center; overflow:hidden;}
+.action .tis a{ color:#7b7b7b; text-align:center;  height:17px; padding-bottom:0px; border-bottom:1px solid #7b7b7b; margin:0 auto; overflow:hidden; display:inline-block;}
+
+
+
+
+
+

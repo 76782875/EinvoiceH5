@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html class="loading" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>开票申请</title>
+<meta charset="UTF-8" />
+</head>
+<body>
+订单号：<span th:text="${tradeNo}"></span><br/>
+停车场ID：<span th:text="${parkId}"></span><br/>
+停车场：<span th:text="${parkName}"></span><br/>
+车牌号：<span th:text="${plateNumber}"></span><br/>
+实付总金额：<span th:text="${costAfter}"></span><br/>
+已开票金额：<span th:text="${hasInvoice}"></span><br/>
+未开票金额：<span th:text="${noInvoice}"></span><br/>
+<form action="http://localhost:8081/EinvoiceH5/hasinv/get" method="POST">
+	<input type="text" th:value="${tradeNo}" th:name="tradeNo" />
+	<input type="submit" value="查看已开票项" />
+</form>
+</body>
+</html>

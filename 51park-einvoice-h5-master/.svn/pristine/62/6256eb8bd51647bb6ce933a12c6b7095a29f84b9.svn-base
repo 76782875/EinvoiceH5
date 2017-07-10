@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="loading">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>无忧停车-开票成功</title>
+<meta charset="UTF-8">
+<meta name="keywords" content="无忧停车网,手机支付">
+<meta name="description" content="无忧停车手机支付二维码">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" id="links">
+<link rel="stylesheet" href="css/base.2.0.css">
+<link rel="stylesheet" href="css/success.css">
+<script type="text/javascript">
+var oldS=document.getElementById("links");if(oldS){oldS.parentNode.removeChild(oldS)}var t=document.createElement("meta");if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){t.content="width=345,maximum-scale=1.09,user-scalable=no"}else{if(/(Android)/i.test(navigator.userAgent)){t.content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"}else{t.content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"}}t.name="viewport";t.id="a1";document.getElementsByTagName("head")[0].appendChild(t);
+</script>
+</head>
+
+<body>
+<!--loading star-->
+<div id="loading_mask">
+	<div class="spinner"></div>
+</div>
+<!--loading end-->
+
+<!--头部 star-->
+<header class="header">
+	<h1>申请开票</h1>
+	<div class="left-head">  
+		<a href="javascript:history.go(-1);" class="head-btn"><span class="head-return"></span></a>	
+	</div>
+</header>
+<!--头部 end-->
+
+<!--加载 star-->
+<div class="la-timer"><div></div></div>
+<!--加载 end-->
+
+<section class="pic"><img src="images/yue_right.png" alt="" /></section>
+
+<section class="pay_info">
+	<p class="info">发票申请中<span class="ani"><em class="ani_dot">...</em></span></p>
+	<p class="info_etc">系统正在处理，请稍等片刻</p>
+</section>
+
+<!--跳转查看 star-->
+<section class="expens">
+	<a id="goal" href="javascript:void(0)" class="btn_make no">查看原件</a>
+</section>
+<!--跳转查看 end-->
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/tips.js"></script>
+<script type="text/javascript">	
+//获取url中的参数
+function getUrlParam(name) {
+    //正则
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+	//匹配目标参数
+	var r = window.location.search.substr(1).match(reg);  
+	//返回参数值
+	if (r != null) return unescape(r[2]); return null;  
+}
+
+$(function(){
+	//预加载loading
+	$(window).bind('DOMContentLoaded',function(){
+		//400毫秒后执行，html对象移除loading样式
+		setTimeout(function(){					
+			 $('html').removeClass('loading');
+		},400);
+	});	
+	
+	//客户端检测
+	var ua = window.navigator.userAgent.toLowerCase();
+	
+	//如果是微信
+	if(ua.match(/MicroMessenger/i)=="micromessenger") {   
+		//alert("微信客户端");   
+		$(".header").hide();
+	
+	//如果是支付宝	
+	}else if(ua.indexOf("alipay")!=-1){
+		//alert("支付宝客户端");  
+		$(".header").hide();
+	
+	//其他	
+	}else{
+		$(".header").show();
+		//$(".header").hide();
+		$(".la-timer").css({"top":"20px"});
+		$(".pic").css({"top":"60px"});
+	}	
+	
+	
+    //流水号
+	var serial_number=getUrlParam('number');
+	//请求服务器端
+	if(serial_number!=null){
+		getNewInfo(serial_number);
+	}
+
+})
+
+//服务器端请求(流水号)
+function getNewInfo(number) {
+
+	//执行AJAX
+	$.ajax({
+		type:"POST",
+		url:"right.php",
+		dataType:'json', 
+		data:{serial_number:number}, 
+		//在发送请求之前调用
+		beforeSend:function () {
+			$(".la-timer").fadeIn();
+		},			
+		//成功
+		success: function (data) { 
+			//如果有数据
+			if(data.status_code=="200"){
+				setTimeout(function(){  
+					 $(".la-timer").fadeOut(100, function(){
+						$(".pic").fadeIn();
+						$("#goal").removeClass("no");
+						$(".info").html("发票申请成功");
+						$(".info_etc").html("已发送到邮箱，请及时查看");
+						//url(标识码)
+						var action_url='cause.html?code='+data.id_code;
+						$("#goal").attr("href",action_url);
+					 });
+				},1500);		
+			}			
+		},		
+		//失败
+		error: function (jqXHR, textStatus, errorThrown){ 	
+			show_err_msg("异常重试");
+		}				
+	})	
+}
+</script>
+</body>
+</html>

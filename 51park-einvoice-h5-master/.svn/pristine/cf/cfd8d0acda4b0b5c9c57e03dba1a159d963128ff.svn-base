@@ -1,0 +1,50 @@
+package com.park.einvoice.h5.controller;
+
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.park.einvoice.h5.domain.HasInvoice;
+import com.park.einvoice.h5.domain.HasInvoiceData;
+import com.park.einvoice.h5.service.HasInvService;
+
+@Controller
+@RequestMapping("/hasinv")
+public class HasInvController {
+	
+	@Resource(name="hasInvServiceImpl")
+	private HasInvService hasInvService;
+	
+	@RequestMapping("/get")
+	public String getHasInvoice(String tradeNo, Model model){
+		//获取已开票列表信息
+		HasInvoice hasInvoice = hasInvService.getHasInvoice(tradeNo);
+		HasInvoiceData data = hasInvoice.getData();
+		String code = hasInvoice.getCode();
+		//若成功，返回订单号和已开票的list，并返回已开票列表页面
+		if(code.equals("200")){
+			model.addAttribute("tradeNo", data.getTradeNo());
+			model.addAttribute("invoiceList", data.getInvoiceList());
+			return "h5_inv_has";
+		}
+		//若失败，跳到错误页面
+		return "error";
+	}
+	
+	@RequestMapping("/getdetail")
+	public String getHasInvoiceDetail(String invoiceReqSerialNo, Model model){
+		Map<String, String> resultMap = hasInvService.getHasInvoiceDetail(invoiceReqSerialNo);
+		//若未得到数据，跳到错误页面
+		if(resultMap == null || resultMap.isEmpty()){
+			return "error";
+		}
+		//TODO 如果成功，返回需要参数，跳到已开票项详情页面
+		//若失败，跳到错误页面
+		return "error";
+	}
+	
+}

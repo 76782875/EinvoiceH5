@@ -1,0 +1,70 @@
+package com.park.einvoice.h5.controller;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.park.einvoice.h5.common.DateTools;
+import com.park.einvoice.h5.service.AppInvService;
+
+@Controller
+@RequestMapping("/appinv")
+public class AppInvController {
+	
+	@Resource(name="appInvServiceImpl")
+	private AppInvService appInvService;
+	
+	@RequestMapping("/show")
+	public String applyInvoicePage(HttpServletRequest request, Model model){
+		String tradeNo = request.getParameter("tradeNo");
+		String parkId = request.getParameter("parkId");
+		String parkName = request.getParameter("parkName");
+		String invoiceAmount = request.getParameter("invoiceAmount");
+		model.addAttribute("tradeNo", tradeNo);
+		model.addAttribute("parkId", parkId);
+		model.addAttribute("parkName", parkName);
+		model.addAttribute("invoiceAmount", invoiceAmount);
+		model.addAttribute("invoiceTime", DateTools.getFormat(new Date()).substring(0, 16));
+		return "h5_inv_app";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/apply")
+	public String applyInvoice(HttpServletRequest request, Model model){
+		String tradeNo = request.getParameter("tradeNo");
+		String parkId = request.getParameter("parkId");
+		String invoiceAmount = request.getParameter("invoiceAmount");
+		String buyerName = request.getParameter("buyerName");
+		String buyerTaxpayerNum = request.getParameter("buyerTaxpayerNum");
+		String takerTel = request.getParameter("takerTel");
+		String takerEmail = request.getParameter("takerEmail");
+		//校验必须参数
+		if(tradeNo == null || tradeNo.equals("") || 
+				parkId == null || parkId.equals("") || 
+				invoiceAmount == null || invoiceAmount.equals("") || 
+				buyerName == null || buyerName.equals("")){
+			return "{'url':'errorpage'}";
+		}
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("tradeNo", tradeNo);
+		paramMap.put("parkId", parkId);
+		paramMap.put("invoiceAmount", invoiceAmount);
+		paramMap.put("buyerName", buyerName);
+		paramMap.put("takerTel", takerTel);
+		paramMap.put("takerEmail", takerEmail);
+		//校验是否有税号参数
+		if(buyerTaxpayerNum != null && !buyerTaxpayerNum.equals("")){
+			paramMap.put("buyerTaxpayerNum", buyerTaxpayerNum);
+		}
+		appInvService.applyInvoice(paramMap);
+		return "{'url':'gowait','tradeNo':'"+tradeNo+"'}";
+	}
+}

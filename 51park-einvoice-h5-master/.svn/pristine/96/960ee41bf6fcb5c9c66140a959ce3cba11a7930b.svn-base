@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html class="loading" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>已开票项详情</title>
+<meta charset="UTF-8" />
+</head>
+<body>
+<span th:text="${invoiceReqSerialNo}"></span><br/>
+<span th:text="${invoicePdf}"></span><br/>
+<img th:src="${invoicePdf}" /><br/>
+<a th:href="${downloadUrl}">点击下载</a>
+</body>
+</html>

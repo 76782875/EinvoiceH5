@@ -1,0 +1,184 @@
+html{color:#333;background:#F5F5F5;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{margin:0;padding:0}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+body,button,input,select,textarea{font:14px/1.5 'Microsoft YaHei',"Helvetica Neue",Helvetica,Arial,STHeiTi,sans-serif;}
+
+/*-webkit-tap-highlight-color:transparent去除点击的高亮效果*/
+*{outline:0;-webkit-tap-highlight-color:transparent;}
+
+/*禁用Webkit内核浏览器的文字大小调整功能*/
+html{-webkit-text-size-adjust:none;overflow-y:scroll}
+input,select,textarea{font-size:100%}
+
+/*去除苹果浏览器按钮默认样式*/
+input[type="button"], input[type="submit"], input[type="reset"] {
+-webkit-appearance:none;
+}
+textarea {  -webkit-appearance: none;}
+
+
+table{border-collapse:collapse;border-spacing:0}
+th{text-align:inherit}
+fieldset,img{border:0}
+del{text-decoration:line-through}
+address,caption,cite,code,dfn,em,th,var{font-style:normal;font-weight:500}
+ol,ul,dl{list-style:none}
+caption,th{text-align:left}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:500}
+q:before,q:after{content:''}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-0.5em}
+sub{bottom:-0.25em}
+a:hover,a:active{text-decoration:none}
+ins,a{text-decoration:none}
+.pr{position:relative}
+.of{overflow:hidden;word-wrap:break-word;word-break:break-all;white-space:nowrap;text-overflow:ellipsis}
+.mt10{margin-top:10px!important}
+.mt20{margin-top:20px!important}
+.rt12{right:12px;!important}
+.lt50{left:200px;!important}
+.lt60{left:210px;!important}
+.red1{color:#E73F23;}
+.fl{ float:left;}
+.fr{float:right;}
+.show{display:block;}
+.hide{display:none;}
+
+.header{ height:45px; line-height:45px; text-align:center; background:#fafafa; margin:0 auto 0px; overflow:hidden; position:relative; width:100%;  }
+.header:after{ content: ''; display:block; position:absolute; width:100%; left:0; bottom:0; height:1px; background-color:#dedddd;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+.header h1{ width:60%; text-align:center; line-height:45px; margin:0 auto; color:#000; font-size:17px; font-weight:normal;}
+
+/*.header .left-head{ position:absolute;left:11px;top:7px; width:23px; height:23px}
+.header .left-head .head-btn{ width:23px; height:23px; display:block;}*/
+
+
+
+.header .left-head{ position:absolute;left:15px;top:2.4px; width:12px; height:12px}
+.header .left-head .head-btn{ width:12px; height:12px; display:block;}
+
+
+
+
+/*.header .left-head .head-btn .head-return{width:23px; height:23px; overflow:hidden;display:inline-block; background:url(../images/back_ico.png) no-repeat; background-size:23px 23px; }*/
+.header .left-head .head-btn .head-return{display:inline-block;  border-left:1px solid #333; border-bottom:1px solid #333; width:12px; height:12px;  
+transform: rotate(45deg);  }
+
+/* 兼容iphone5 */
+@media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){
+	.header .left-head{ position:absolute;left:15px;top:1.8px; width:12px; height:12px}
+}
+
+/* 兼容iphone5 */
+/*@media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){
+	.header .left-head{ position:absolute;left:11px;top:6px; width:23px; height:23px}
+}*/
+
+
+
+
+.content{ min-height:330px;}
+
+
+
+/*loading(默认)*/
+#loading_mask{-webkit-transform:translateX(0);-moz-transform:translateX(0);transform:translateX(0);visibility:hidden; width:100%; height:100%; position:absolute;top:0;left:0;background:#F5F5F5; z-index:999; -webkit-transition:all 0.6s cubic-bezier(0.165,0.84,0.44,1); -moz-transition:all 0.6s cubic-bezier(0.165,0.84,0.44,1); transition:all 0.6s cubic-bezier(0.165,0.84,0.44,1); opacity:0; overflow:hidden;}
+/*loading(显示)*/
+.loading #loading_mask{opacity:1;visibility:visible;-webkit-transform:translateX(0);-moz-transform:translateX(0);transform:translateX(0);overflow:hidden; }
+
+.spinner {
+  width: 45px;
+  height: 45px;
+  background-color: #FD5639;
+  position:absolute;
+  left:50%;
+  top:40%;
+  margin-top:-22.5px;
+  margin-left:-22.5px;
+  -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+  animation: rotateplane 1.2s infinite ease-in-out;
+}
+ 
+@-webkit-keyframes rotateplane {
+  0% { -webkit-transform: perspective(120px) translateZ(0)}
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) translateZ(0) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) translateZ(0) }
+}
+ 
+@keyframes rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+  } 50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+  } 100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+
+.load {
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    width: 90px;
+    height: 90px;
+    margin: -45px 0 0 -45px;
+    line-height: 136px;
+    border-radius: 8px;
+    background-image: url(../images/loading.gif);
+    background-position: center 18px;
+    background-repeat: no-repeat;
+    background-size: 36px;
+    background-color: rgba(0, 0, 0, 0.80);
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+	z-index:9999;
+	display:none;
+	animation: fadeIn 0.6s;
+    
+}
+
+.sub_yes{
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    width: 90px;
+    height: 90px;
+    margin: -45px 0 0 -45px;
+    line-height: 142px;
+    border-radius: 8px;
+    background-image: url(../images/succe.png);
+    background-position: center 12px;
+    background-repeat: no-repeat;
+    background-size: 46px;
+    background-color: rgba(0, 0, 0, 0.80);
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+	z-index:9999;
+	display:none;
+	animation: fadeIn 0.6s;
+    
+}
+
+@keyframes fadeIn {
+
+  from {
+    opacity: 0;
+	transform: scale3d(.8, .8, .8);
+  }
+  30% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }  
+  60% {
+    transform: scale3d(.97, .97, .97);
+  }  
+  to {
+    opacity: 1;
+	transform: scale3d(1, 1, 1);
+  }
+}
+.mask{ background-color:#000; background:rgba(0,0,0,.1); z-index:100;width:100%;height:100%;position:fixed;left:0;top:0; display:none; }

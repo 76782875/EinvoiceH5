@@ -1,0 +1,111 @@
+package com.park.einvoice.h5.service.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.park.einvoice.h5.common.Base64Tools;
+import com.park.einvoice.h5.common.DataChangeTools;
+import com.park.einvoice.h5.common.HttpTools;
+import com.park.einvoice.h5.common.properties.Invoiceh5;
+import com.park.einvoice.h5.domain.HasInvoice;
+import com.park.einvoice.h5.domain.HasInvoiceDetail;
+import com.park.einvoice.h5.domain.HasInvoiceDetailData;
+import com.park.einvoice.h5.service.HasInvService;
+
+@Repository(value="hasInvServiceImpl")
+public class HasInvServiceImpl extends BaseService implements HasInvService {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+	private Invoiceh5 invoiceh5;
+	
+	private String preUrl;
+	private String url4HasInv;
+	private String url4HasInvDetail;
+	
+	@Override
+	public HasInvoice getHasInvoice(String tradeNo) {
+		try {
+			//获取基本信息
+			getInvoiceh5Info();
+			String url = preUrl + url4HasInv;
+			Map<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("tradeNo", tradeNo);
+			String paramJson = DataChangeTools.bean2gson(paramMap);
+			logger.info("** 获取已开票页信息，请求：" + paramJson + "，url：" + url);
+			//准备请求数据并发送请求
+			Map<String,String> headers = getHeaders(paramJson,url);
+			String result=HttpTools.HttpClientPost(url, paramJson, headers);
+			//将结果解析为map
+			logger.info("** 获取已开票页信息，结果：" + result);
+			HasInvoice hasInvoice = DataChangeTools.gson2bean(result, HasInvoice.class);
+			if(hasInvoice == null){
+				return null;
+			}
+			String code = hasInvoice.getCode();
+			//根据map中的code判断是否获取成功
+			if(code.equals("200")){
+				logger.info("** 获取已开票页信息成功，返回数据：" + hasInvoice);
+			}else{
+				logger.info("** 获取已开票页信息失败，返回数据：" + hasInvoice);
+			}
+			return hasInvoice;
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("** 获取已开票页信息出现异常：" + e.getMessage());
+			return null;
+		}
+	}
+	
+	@Override
+	public Map<String, String> getHasInvoiceDetail(String invoiceReqSerialNo) {
+		getInvoiceh5Info();
+		String url = preUrl + url4HasInvDetail;
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("invoiceReqSerialNo", invoiceReqSerialNo);
+		String paramJson = DataChangeTools.bean2gson(paramMap);
+		logger.info("** 获取已开票项详情页信息，请求：" + paramJson + "，url：" + url);
+		//准备请求数据并发送请求
+		Map<String,String> headers = getHeaders(paramJson,url);
+		String result=HttpTools.HttpClientPost(url, paramJson, headers);
+		//将结果解析为map
+		logger.info("** 获取已开票项详情页信息，结果：" + result);
+		HasInvoiceDetail hasInvDet = DataChangeTools.gson2bean(result, HasInvoiceDetail.class);
+		if(hasInvDet == null){
+			return null;
+		}
+		String code = hasInvDet.getCode();
+		//根据map中的code判断是否获取成功
+		if(code.equals("200")){
+			//成功，则返回数据的map，不包含code、msg信息
+			HasInvoiceDetailData data = hasInvDet.getData();
+			String dataStr = DataChangeTools.bean2gson(data);
+			Map<String, String> resultMap = DataChangeTools.json2Map(dataStr);
+			//解析下载url的Base64编码，解析后覆盖map中原来的数据
+			String downloadUrlBase64 = resultMap.get("downloadUrl");
+			String downloadUrl = Base64Tools.decode(downloadUrlBase64);
+			resultMap.put("downloadUrl", downloadUrl);
+			logger.info("** 获取已开票项详情页信息成功，返回数据：" + dataStr);
+			return resultMap;
+		}
+		//失败，则只返回包含code、msg的map
+		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("code", code);
+		resultMap.put("msg", hasInvDet.getMsg());
+		logger.info("** 获取已开票项详情页信息失败，返回数据：" + DataChangeTools.bean2gson(resultMap));
+		return resultMap;
+	}
+	
+	private void getInvoiceh5Info(){
+		preUrl = invoiceh5.getPreUrl();
+		url4HasInv = invoiceh5.getUrl4HasInv();
+		url4HasInvDetail = invoiceh5.getUrl4HasInvDetail();
+	}
+
+}

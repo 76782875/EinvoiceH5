@@ -1,0 +1,10 @@
+# url前缀
+preUrl=http://alphaeinvoice.51park.cn/Einvoice/
+# 订单申请开票页请求地址
+url4OrdInv=orderInvoice/getOrderInvoiceStatus/
+# 已开票页请求地址
+url4HasInv=hasInvoice/getHasInvoice/
+# 已开票详情页请求地址
+url4HasInvDetail=hasInvoice/getHasInvoiceDetail/
+# 申请开票请求地址
+url4AppInv=blueInvoice/blueInvoice/

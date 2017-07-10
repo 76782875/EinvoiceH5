@@ -1,0 +1,99 @@
+package com.park.einvoice.h5.service.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.park.einvoice.h5.common.DataChangeTools;
+import com.park.einvoice.h5.common.HttpTools;
+import com.park.einvoice.h5.common.properties.Invoiceh5;
+import com.park.einvoice.h5.domain.WaitInvoice;
+import com.park.einvoice.h5.service.WaitService;
+
+@Repository(value="waitServiceImpl")
+public class WaitServiceImpl extends BaseService implements WaitService {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+	private Invoiceh5 invoiceh5;
+	
+	private String preUrl;
+	private String url4Wait;
+	@Override
+	public Map<String, String> waitInvoice(String invoiceReqSerialNo) {
+		try {
+			//获取基本信息
+			getInvoiceh5Info();
+			String url = preUrl + url4Wait;
+			Map<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("invoiceReqSerialNo", invoiceReqSerialNo);
+			String requestJsonStr = DataChangeTools.bean2gson(paramMap);
+			logger.info("** 获取等待中发票信息，请求：" + requestJsonStr + "，url：" + url);
+			//创建结果集
+//			Map<String, String> resultMap = new HashMap<String, String>();
+			//准备请求数据并发送请求
+			Map<String,String> headers = getHeaders(requestJsonStr,url);
+			String result=HttpTools.HttpClientPost(url, requestJsonStr, headers);
+			//取到返回的结果
+			logger.info("** 获取等待中发票信息，结果：" + result);
+			WaitInvoice waitInvoice = DataChangeTools.gson2bean(result, WaitInvoice.class);
+			
+			String status ="";
+			//获取推送结果为空或推送状态为失败
+			if (null ==waitInvoice || !waitInvoice.getData().getInvoiceStatus().equals("1")) {
+				status ="0";
+			}else {
+				status ="1";
+			}
+			Map<String, String> map =new HashMap<String, String>();
+			map.put("status", status);
+			return map;
+//			//循环发送请求100次，直至成功
+//			for(int i = 0; ; ++i){
+//				if(i < 200){
+//					//200次以内，每隔3秒发送一次请求
+//					Thread.sleep(3000);
+//				}else{
+//					//100次之后，每隔10分钟查一次
+//					Thread.sleep(1000 * 60 * 10);
+//				}
+//				String result=HttpTools.HttpClientPost(url, requestJsonStr, headers);
+//				//取到返回的结果
+//				logger.info("** 获取等待中发票信息，结果：" + result);
+//				WaitInvoice waitInvoice = DataChangeTools.gson2bean(result, WaitInvoice.class);
+//				//如果结果为null，重新发送请求
+//				if(waitInvoice == null){
+//					continue;
+//				}
+//				//如果结果中发票申请状态为空或者不为1，重新发送请求
+//				WaitInvoiceData data = waitInvoice.getData();
+//				String invoiceStatus = data.getInvoiceStatus();
+//				if(invoiceStatus == null || !invoiceStatus.equals("1")){
+//					continue;
+//				}
+//				//如果结果中发票申请状态为1，返回查询结果集
+//				if(invoiceStatus.equals("1")){
+//					String dataStr = DataChangeTools.bean2gson(data);
+//					resultMap = DataChangeTools.json2Map(dataStr);
+//					logger.info("** 获取等待中发票信息成功，返回数据：" + dataStr);
+//					return resultMap;
+//				}
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	private void getInvoiceh5Info(){
+		preUrl = invoiceh5.getPreUrl();
+		url4Wait = invoiceh5.getUrl4Wait();
+	}
+	
+}

@@ -1,0 +1,29 @@
+body{ background-color:#F5F5F5; padding:0 0 80px;}
+
+.wapper{ width:100%; margin:0px auto 0; }
+.wapper .list{ width:100%; margin:0 auto 10px; background:#fff; overflow:hidden; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; position:relative;}
+
+.border_no:before{ content: ''; display:block; position:absolute; width:100%; left:0; top:0; height:0px!important; background-color:#dedddd;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+/*.wapper .list:first-child:before{ content: ''; display:block; position:absolute; width:100%; left:0; top:0; height:0px; background-color:#dedddd;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}*/
+
+.wapper .list:before{ content: ''; display:block; position:absolute; width:100%; left:0; top:0; height:1px; background-color:#dedddd;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+.wapper .list:after{ content: ''; display:block; position:absolute; width:100%; left:0; bottom:0; height:1px; background-color:#dedddd;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+
+.wapper .list li{ width:100%;  color:#444; height:52px; line-height:52px;  font-size:16.2px; overflow:hidden; position:relative; text-indent:3%;}
+.wapper .list li .n_r{ float:right; color:#666; margin:0 3% 0 0; font-size:16.0px; width:68%; text-align:right; }
+.wapper .list li:after{ content: ''; display:block; position:absolute; width:97%; right:0; bottom:0; height:1px; background-color:#E8E8E8;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+.wapper .list li:last-child:after{ content: ''; display:block; position:absolute; width:97%; right:0; bottom:0; height:0px; }
+.wapper .list li .red{ color:#ff5b5b;}
+
+.wapper .expens{ width:94%; margin:20px auto 0; }
+.wapper .expens .btn_history a{ font-size:17px; display:block; width:100%;  color:#ffffff; background:#ec4f39; border:none; height:46px; line-height:46px; font-family:microsoft yahei; margin:17px auto 8px; border-radius:3px;  display:-moz-box; clear:both; text-align:center;}
+.wapper .expens .btn_history a:active{background:#e7412e;}
+
+.wapper .expens .no a{ background:#D6D6D6;}
+.wapper .expens .no a:active{background:#D6D6D6;}
+
+.wapper .expens .btn_make a{ font-size:17px; display:block; width:100%;  color:#ffffff; background:#ec4f39; border:none; height:46px; line-height:46px; font-family:microsoft yahei; margin:17px auto 6px; border-radius:3px;  display:-moz-box; clear:both; text-align:center;}
+.wapper .expens .btn_make a:active{background:#e7412e;}
+
+
+

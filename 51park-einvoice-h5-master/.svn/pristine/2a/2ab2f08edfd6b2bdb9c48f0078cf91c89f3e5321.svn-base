@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html class="loading" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>无忧停车-错误页面</title>
+<meta charset="UTF-8" />
+<meta name="keywords" content="无忧停车网,手机支付" />
+<meta name="description" content="无忧停车手机支付二维码" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" id="links" />
+<link rel="stylesheet" th:href="@{/css/base.2.0.css}" />
+<link rel="stylesheet" th:href="@{/css/fail.css}" />
+<script type="text/javascript">
+var oldS=document.getElementById("links");if(oldS){oldS.parentNode.removeChild(oldS)}var t=document.createElement("meta");if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){t.content="width=345,maximum-scale=1.09,user-scalable=no"}else{if(/(Android)/i.test(navigator.userAgent)){t.content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"}else{t.content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"}}t.name="viewport";t.id="a1";document.getElementsByTagName("head")[0].appendChild(t);
+</script>
+</head>
+
+<body>
+<!--loading star-->
+<div id="loading_mask">
+	<div class="spinner"></div>
+</div>
+<!--loading end-->
+
+<!--头部 star-->
+<header class="header">
+	<h1>申请开票</h1>
+	<div class="left-head">  
+		<a href="javascript:history.go(-1);" class="head-btn"><span class="head-return"></span></a>	
+	</div>
+</header>
+<!--头部 end-->
+
+<section class="pay_info">
+	<figure class="pic">
+  		<img th:src="@{/images/smile.png}" alt=""/>
+		<p class="info">出错啦！</p>
+		<p class="info_etc">抱歉系统繁忙，请稍后返回重试</p>
+	</figure>
+</section>
+<section class="action">
+	<a href="index.html" class="btn-pay" >返回</a>
+</section>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript">
+$(function(){
+	//预加载loading
+	$(window).bind('DOMContentLoaded',function(){
+		//400毫秒后执行，html对象移除loading样式
+		setTimeout(function(){					
+			 $('html').removeClass('loading');
+		},400);
+	});	
+	
+	//客户端检测
+	var ua = window.navigator.userAgent.toLowerCase();
+	
+	//如果是微信
+	if(ua.match(/MicroMessenger/i)=="micromessenger") {   
+		//alert("微信客户端");   
+		$(".header").hide();
+		$(".pay_info").css({"top":"30px"});
+	
+	//如果是支付宝	
+	}else if(ua.indexOf("alipay")!=-1){
+		//alert("支付宝客户端");  
+		$(".header").hide();
+		$(".pay_info").css({"top":"30px"});
+	
+	//其他	
+	}else{
+		$(".header").show();
+	}	
+});	
+
+</script>
+</body>
+</html>

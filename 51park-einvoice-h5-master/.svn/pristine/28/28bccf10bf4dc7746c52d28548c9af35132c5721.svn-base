@@ -1,0 +1,118 @@
+html{background-color:#FFF;}
+body{ background-color:#FFF; padding:0 0 20px;}
+
+.wapper{ width:100%; margin:0px auto 0; }
+.wapper .info{ width:82%; margin:10px auto 15px;}
+.wapper .info dt{width:100%;  color:#333; height:31px; line-height:31px;  font-size:14.8px; overflow:hidden; position:relative; }
+.wapper .info dt .n_r{ float:right; color:#666; font-size:14.8px; width:72%; text-align:right; }
+
+.wapper .info dd{width:100%;  color:#333; height:31px; line-height:31px;  font-size:15px; overflow:hidden; position:relative; }
+.wapper .info dd .n_r{ float:right; color:#666; font-size:15px; width:68%; text-align:right; }
+.wapper .info dd .red{ color:#ff5b5b;}
+
+.wapper .forms{ width:90%; height:346px; margin:0 auto; border:1px solid #ebebeb; border-bottom:0;  box-shadow:0px 0px 6px 0px rgba(232, 231, 231, .8); position:relative; padding:5px 0 0;  -webkit-box-sizing:border-box; box-sizing:border-box;}
+.wapper .forms:before{ content: ''; display:block; width:16px; height:28px; background:url(../images/pin.png) no-repeat; background-size:16px 28px; position:absolute; top:-6px; left:7px;}
+.wapper .forms .title{ width:88%; height:48px; line-height:48px; margin:0 auto; position:relative; font-size:16.4px; text-indent:4px; font-weight:normal;}
+.wapper .forms .title:after{ content: ''; display:block; position:absolute; width:100%; left:0; bottom:0; height:1px; background-color:#dedddd;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+
+/*.wapper .forms .menu{ position:absolute; color:#333; width:98px; height:25px; line-height:25px; border:1px solid #ec4f39; right:6.5%; top:12px;border-radius:18px; font-size:12px;}*/
+.wapper .forms .menu{ position:absolute; color:#333; width:98px; height:25px; line-height:25px;  right:6.5%; top:14px; font-size:12px;}
+.wapper .forms .menu:after{content: ''; display:block; border:1px solid #ec4f39; box-sizing:border-box; width:100%; height:100%; border-radius:18px; position:absolute; top:0; left:0; }
+
+@media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx), (-ms-high-contrast:active), (-ms-high-contrast:none) {
+.wapper .forms .menu:after{
+	width:200%;
+	height:200%;
+	-webkit-transform:scale(.5);
+	-ms-transform:scale(.5);
+	-o-transform:scale(.5);
+	transform:scale(.5);
+	transform-origin:0 0;
+	border-radius:38px;
+	border:1px solid #ec4f39;
+
+}	
+}
+@media (-webkit-device-pixel-ratio: 1.5){
+.wapper .forms .menu:after{
+	width:150%;
+	height:150%;
+	-webkit-transform:scale(.6666);
+	-ms-transform:scale(.6666);
+	-o-transform:scale(.6666);
+	transform:scale(.6666);
+	border-radius:38px;
+	border:1px solid #ec4f39;
+}	
+}
+
+@media (-webkit-device-pixel-ratio: 3){
+.wapper .forms .menu:after{
+	width:300%;
+	height:300%;
+	-webkit-transform:scale(.3333);
+	-ms-transform:scale(.3333);
+	-o-transform:scale(.3333);
+	transform:scale(.3333);
+	border-radius:38px;
+	border:2px solid #ec4f39;
+}	
+}
+
+/* 兼容iphone5 */
+@media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){
+.wapper .forms .menu{ position:absolute; color:#333; width:98px; height:25px; line-height:25px;  right:6.5%; top:16px; font-size:12px;}	
+}
+
+/* 兼容iphone6 */
+@media (min-device-width : 375px) and (max-device-width : 667px) and (-webkit-min-device-pixel-ratio : 2){
+.wapper .forms .menu{ position:absolute; color:#333; width:98px; height:25px; line-height:25px;  right:6.5%; top:16px; font-size:12px;}	
+}
+
+
+/* 兼容iphone6 Plus */
+@media(min-device-width:414px) and (max-device-width:736px) and (-webkit-min-device-pixel-ratio:3){
+.wapper .forms .menu{ position:absolute; color:#333; width:98px; height:25px; line-height:25px;  right:6.5%; top:16px; font-size:12px;}	
+}
+
+.wapper .forms .menu .m1{  display:block; position:absolute; width:49px; height:25px; left:0; top:0; text-align:center; z-index:2; cursor:pointer;}
+.wapper .forms .menu .m2{  display:block; position:absolute; width:49px; height:25px; right:0; top:0; text-align:center; z-index:2; cursor:pointer;}
+.wapper .forms .menu .select{ color:#fff;}
+.wapper .forms .menu i{ position:absolute; transition:all ease .2s;-webkit-transition:all ease .2s; z-index:1;  width:53px; height:25px; background:#ec4f39; border-radius:18px; left:0px; }
+.wapper .forms .menu i.checked{ left:46px;}
+
+
+.wapper .forms .list_0{ width:88%; margin:0 auto;}
+.wapper .forms .list_0 li{width:100%;  color:#444; height:45px; line-height:45px;  font-size:16px; overflow:hidden; position:relative; text-indent:4px;}
+.wapper .forms .list_0 li:after{ content: ''; display:block; position:absolute; width:100%; left:0; bottom:0; height:1px; background-color:#E8E8E8;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+
+.wapper .forms .list_0 li:last-child:after{ content: ''; display:block; position:absolute; width:100%; left:0; bottom:0; height:0px; background-color:#E8E8E8;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+
+.wapper .forms .list_0 li .n_r{ float:right; color:#666; font-size:15px; width:70%; text-align:right; }
+.wapper .forms .list_0 li .n_r .input_1{ width:98%; height:34px; border:none; text-align:right; position:relative; line-height:normal; vertical-align:middle; background:#fff; color:#666;}
+
+.wapper .forms .list_0 li .n_l{ float:left; color:#e1e1e1; font-size:15px; width:72%; text-align:left; }
+.wapper .forms .list_0 li .n_l em{ color:#eb4f39; margin:0 2px 0 0; font-style:normal;}
+.wapper .forms .list_0 li .gray{ font-size:12px; color:#c8c8c8;}
+
+
+
+.wapper .forms .list_1{ width:88%; margin:0 auto;}
+.wapper .forms .list_1 li{width:100%;  color:#444; height:45px; line-height:45px;  font-size:16px; overflow:hidden; position:relative; text-indent:4px;}
+.wapper .forms .list_1 li:after{ content: ''; display:block; position:absolute; width:100%; left:0; bottom:0; height:1px; background-color:#E8E8E8;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+.wapper .forms .list_1 li .n_r{ float:right; color:#666; font-size:15px; width:70%; text-align:right; }
+.wapper .forms .list_1 li .n_r .input_1{ width:98%; height:34px; border:none; text-align:right; position:relative; line-height:normal; vertical-align:middle; background:#fff; color:#666;}
+
+
+.wapper .forms .list_2{ width:88%; margin:0 auto 30px;}
+.wapper .forms .list_2 li{width:100%;  color:#444; height:45px; line-height:45px;  font-size:16px; overflow:hidden; position:relative; text-indent:4px;}
+.wapper .forms .list_2 li:after{ content: ''; display:block; position:absolute; width:100%; left:0; bottom:0; height:1px; background-color:#E8E8E8;  -webkit-transform:scaleY(0.5); transform:scaleY(0.5);}
+.wapper .forms .list_2 li .n_r{ float:right; color:#666; font-size:15px; width:66%; text-align:right; }
+.wapper .forms .list_2 li .n_r .input_1{ width:98%; height:34px; border:none; text-align:right; position:relative; line-height:normal; vertical-align:middle; background:#fff; color:#666;}
+
+input::-webkit-input-placeholder{ color:#bebdbd!important; font-size:14px; text-align:right; }
+
+.wapper .forms .btn-action{font-size:17px; display:block; width:88%;  color:#ffffff; background:#ec4f39; border:none; height:46px; line-height:46px; font-family:microsoft yahei; margin:17px auto 6px; border-radius:3px;  display:-moz-box; clear:both; text-align:center; cursor:pointer}
+.wapper .forms .btn-action:active{background:#e7412e;}
+
+.wapper .foot{width:90%; height:5px; margin:0 auto;  position:relative; padding:5px 0 0; background:url(../images/tooth.png) no-repeat left top; background-size:100% 5px; -webkit-box-sizing:border-box; box-sizing:border-box;}

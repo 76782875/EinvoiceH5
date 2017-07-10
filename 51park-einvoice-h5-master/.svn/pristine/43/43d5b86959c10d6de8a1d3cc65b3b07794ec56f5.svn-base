@@ -1,0 +1,17 @@
+package com.park.einvoice.h5.service;
+
+import org.springframework.stereotype.Repository;
+
+import com.park.einvoice.h5.domain.HasInvoice;
+
+/**
+ * 获取已开票页面信息的Service
+ * @author WangYuefei
+ *
+ */
+@Repository(value="hasInvoice")
+public interface HasInvService {
+
+	public HasInvoice getHasInvoice(String tradeNo);
+	
+}

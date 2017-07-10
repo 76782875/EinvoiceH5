@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html class="loading" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>已开票</title>
+<meta charset="UTF-8" />
+</head>
+<body>
+<span th:text="${tradeNo}"></span><br/>
+<table>
+	<tr th:each="invoice : ${invoiceList}">
+		<td th:text="${invoice.invoiceReqSerialNo}"></td>
+		<td th:text="${invoice.buyerName}"></td>
+		<td th:text="${invoice.invoiceAmount}"></td>
+		<td th:text="${invoice.invoiceTime}"></td>
+		<td th:text="${invoice.invoiceStatus} == 1 ? '已开票' : '开票中'"></td>
+		<td th:if="${invoice.invoiceStatus} == 1">
+			<form action="" method="POST">
+				<input type="text" th:value="invoice.invoiceReqSerialNo" th:name="invoiceReqSerialNo" />
+				<input type="submit" value="查看详情" />
+			</form>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

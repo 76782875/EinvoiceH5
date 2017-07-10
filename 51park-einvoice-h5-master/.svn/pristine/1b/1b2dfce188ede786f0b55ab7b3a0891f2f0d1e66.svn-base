@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="loading" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>无忧停车-发票原件</title>
+<meta charset="UTF-8" />
+<meta name="keywords" content="无忧停车网,手机支付" />
+<meta name="description" content="无忧停车手机支付二维码" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" id="links" />
+<link rel="stylesheet" th:href="@{/css/base.2.0.css}" />
+<link rel="stylesheet" th:href="@{/css/cause.css}" />
+<script type="text/javascript">
+var oldS=document.getElementById("links");if(oldS){oldS.parentNode.removeChild(oldS)}var t=document.createElement("meta");if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){t.content="width=345,maximum-scale=1.09,user-scalable=no"}else{if(/(Android)/i.test(navigator.userAgent)){t.content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"}else{t.content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"}}t.name="viewport";t.id="a1";document.getElementsByTagName("head")[0].appendChild(t);
+</script>
+</head>
+
+<body>
+<!--loading star-->
+<div id="loading_mask">
+	<div class="spinner"></div>
+</div>
+<!--loading end-->
+
+<!--加载 star-->
+<div class="load">提交中…</div>
+<!--加载 end-->
+
+<!--头部 star-->
+<header class="header">
+	<h1>发票原件</h1>
+	<div class="left-head">  
+		<a href="javascript:history.go(-1);" class="head-btn"><span class="head-return"></span></a>	
+	</div>
+</header>
+<!--头部 end-->
+
+<!--主体 star-->
+<div class="wapper">
+	<!--发票PDF截图 star-->
+	<section class="pic_info">
+		<div class="pic"><img th:src="${invoiceImg}" onerror="nofind()" alt="发票PDF" /></div>
+		<h2 class="title"><span class="star">★</span>上图为发票模拟图,不能作为报销凭据。</h2>
+		<p class="info">（请下载邮件附件中的正式电子发票。如有发票报<br/>销、发票验证真伪等问题,请拨打<a href="tel:12366">12366</a>纳税服务热线。）</p>
+	</section>
+	<!--发票PDF截图 end-->
+	
+	<ul class="menu">
+		<li class="download"><a href="#" th:href="${downloadUrl}">下载PDF文件</a></li>
+		<li class="email"><a href="javascript:void(0)">发送到邮箱</a></li>
+	</ul>
+	
+	<section class="action">
+		<a href="javascript:void(0)" class="btn_make" onClick="">关闭</a>
+	</section>
+</div>
+<!--主体 end-->
+
+<!--提示窗 star-->
+<div id="window">
+	<h2 class="title">发送邮件</h2>
+	<div class="close"><span class="win_close"></span></div>  
+	<input type="text" class="input_1" placeholder="请填写接收电子发票邮箱" />
+	<input type="button" class="btn_post" value="发送" />
+</div>
+<!--提示窗 end-->
+<!--遮罩层 star-->
+<div id="mask"></div>
+<!--遮罩层 end-->
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/fastclick.js}"></script>
+<script type="text/javascript" th:src="@{/js/tips.js}"></script>
+<script type="text/javascript">
+//异常图片替换
+function nofind(){
+	var img=event.srcElement;
+	img.src="images/default.png";
+	img.onerror=null; 
+}
+$(function(){
+	//预加载loading
+	$(window).bind('DOMContentLoaded',function(){
+		//400毫秒后执行，html对象移除loading样式
+		setTimeout(function(){					
+			 $('html').removeClass('loading');
+		},400);
+	});	
+	
+	//客户端检测
+	var ua = window.navigator.userAgent.toLowerCase();
+	
+	//微信
+	if(ua.match(/MicroMessenger/i)=="micromessenger") {   
+		$(".header").hide();
+		$(".wapper").css({"marginTop":"15px"});
+		$(".pic_info").removeClass("border_no");
+		$("#window").css({"top":"45%"});
+		$(".btn_make").attr("onClick","WeixinJSBridge.call('closeWindow')");
+	//支付宝
+	}else if(ua.indexOf("alipay")!=-1){
+		$(".header").hide();
+		$(".wapper").css({"marginTop":"15px"});
+		$(".pic_info").removeClass("border_no");
+		$("#window").css({"top":"45%"});
+		$(".btn_make").attr("onClick","AlipayJSBridge.call('closeWebview')");
+	//其他
+	}else{
+		$(".header").show();
+		$(".wapper").css({"marginTop":"0px"});
+		$("#window").css({"top":"50%"});
+		$(".pic_info").addClass("border_no");
+		$(".btn_make").attr("onClick",'window.location.href="about:blank"');
+	}
+	
+		
+    //打开邮箱窗口
+	$(".email").click(function(event){
+		$("#window").removeClass("alert-box-anim-out").addClass("alert-box-anim");	
+		$("#mask").removeClass("alert-bg-anim-out").addClass("alert-bg-anim");
+	});	
+	//关闭邮箱窗口
+	$(".close").click(function(event){	
+		$("#window").removeClass("alert-box-anim").addClass("alert-box-anim-out");		
+		$("#mask").removeClass("alert-bg-anim").addClass("alert-bg-anim-out");
+	});
+	
+	FastClick.attach(document.body);
+})
+
+//邮件发送
+$(".btn_post").click(function(){
+	//邮箱格式(数字/字母/字母数字混合/带点的/带下划线/带连接线)
+	var regex=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+	
+	//邮箱为空
+	if($('.input_1').val() == ""){	
+		show_err_msg("邮箱不能为空");
+		return false;
+	//邮箱格式
+	}else if(!regex.test($('.input_1').val())){
+		show_err_msg("邮箱填写错误");
+		return false;
+	}else{
+		//邮箱
+		var emial=$('.input_1').val();
+		//执行AJAX
+		$.ajax({
+			type:"POST",
+			url:"cause.php",
+			dataType:'json', 
+			data:{emial:emial}, 
+			timeout:8000,                             //超时超时时间（8秒）
+			//在发送请求之前调用
+			beforeSend:function(){
+				$(".load").show();
+			},				
+			//成功
+			success: function(data){
+				//如果有数据
+				if(data.status_code=="200"){		
+					setTimeout(function(){ 
+						$(".load").hide(); 
+						
+						show_msg('提交成功','email.html');
+						setTimeout(function(){ 
+							$(".close").trigger("click"); 	
+							//清空	
+							$('.input_1').val("");
+						},1300);	
+					},200);	
+					
+				}		 	
+			},
+			//失败
+			error: function (jqXHR, textStatus, errorThrown){ 	
+				if(textStatus=="timeout"){
+					$(".load").hide();
+					show_err_msg("网络超时");
+				}else{
+					$(".load").hide();
+					show_err_msg("异常重试");
+				}		
+			}		
+		})
+	}
+})
+document.body.addEventListener('touchstart', function(){ }); 
+</script>
+</body>
+</html>
+<!-- 
+<span th:text="${invoiceReqSerialNo}"></span><br/>
+<span th:text="${invoicePdf}"></span><br/>
+<img th:src="${invoicePdf}" /><br/>
+<a th:href="${downloadUrl}">点击下载</a>
+</body>
+</html> -->

@@ -1,0 +1,33 @@
+package com.park.einvoice.h5.controller;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.park.einvoice.h5.domain.HasInvoice;
+import com.park.einvoice.h5.domain.HasInvoiceData;
+import com.park.einvoice.h5.service.HasInvService;
+
+@Controller
+@RequestMapping("/hasinv")
+public class HasInvController {
+	
+	@Resource(name="hasInvServiceImpl")
+	private HasInvService hasInvService;
+	
+	@RequestMapping("/get")
+	public String getHasInvoice(String tradeNo, Model model){
+		HasInvoice hasInvoice = hasInvService.getHasInvoice(tradeNo);
+		HasInvoiceData data = hasInvoice.getData();
+		String code = hasInvoice.getCode();
+		if(code.equals("200")){
+			model.addAttribute("tradeNo", data.getTradeNo());
+			model.addAttribute("invoiceList", data.getInvoiceList());
+			return "h5_inv_has";
+		}
+		return "error";
+	}
+	
+}

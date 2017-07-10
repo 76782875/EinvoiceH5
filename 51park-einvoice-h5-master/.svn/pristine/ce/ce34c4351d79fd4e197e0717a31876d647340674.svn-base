@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html class="loading" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>test</title>
+<meta charset="UTF-8" />
+</head>
+<body>
+<p>出错啦！</p><br/>
+<span>错误码：</span>
+<span th:text="${code}">无</span><br/><br/>
+<span>错误原因：</span>
+<span th:text="${msg}">未知</span>
+</body>
+</html>

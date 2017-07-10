@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html class="loading" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>无忧停车-申请开票</title>
+<meta charset="UTF-8" />
+<meta name="keywords" content="无忧停车网,手机支付" />
+<meta name="description" content="无忧停车手机支付二维码" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" id="links" />
+<link rel="stylesheet" th:href="@{/css/base.2.0.css}" />
+<link rel="stylesheet" th:href="@{/css/piao.css}" />
+<script type="text/javascript">
+var oldS=document.getElementById("links");if(oldS){oldS.parentNode.removeChild(oldS)}var t=document.createElement("meta");if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){t.content="width=345,maximum-scale=1.09,user-scalable=no"}else{if(/(Android)/i.test(navigator.userAgent)){t.content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"}else{t.content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"}}t.name="viewport";t.id="a1";document.getElementsByTagName("head")[0].appendChild(t);
+</script>
+</head>
+
+<body>
+<!--loading star-->
+<div id="loading_mask">
+	<div class="spinner"></div>
+</div>
+<!--loading end-->
+
+<!--加载 star-->
+<div class="load">提交中…</div>
+<!--加载 end-->
+
+<div class="mask"></div>
+
+<!--头部 star-->
+<header class="header">
+	<h1>申请开票</h1>
+	<div class="left-head">  
+		<a href="javascript:history.go(-1);" class="head-btn"><span class="head-return"></span></a>	</div>
+</header>
+<!--头部 end-->
+
+<!--主体 star-->
+<div class="wapper">
+	<!--信息 star-->
+	<dl class="info">
+		<dt>收款人：<span class="n_r of" th:text="${parkName}"></span></dt>
+		<dd>开票时间：<span class="n_r">2017-06-02 12:45</span></dd>
+		<dd>开票金额：<span class="n_r red" th:text="￥ + ${invoiceAmount}"></span></dd>
+	</dl>
+	<!--信息 end-->
+	
+	<!--表单 star-->
+	<section class="forms">
+		<h2 class="title">发票类型</h2>
+		<!--类型 star-->
+		<div class="menu">
+			<span class="m1">个人</span><span class="m2 select">单位</span>
+			<i class="checked"></i>
+		</div>
+		<!--类型 end-->	
+		<input type="hidden" id="piao_type" value="1" />
+		
+		<!--个人 star-->
+		<div id="type_1" style="display:none">
+			<ul class="list_0">
+				<li>抬头：<span class="n_r"><input id="form_5" type="text" class="input_1" placeholder="发票抬头名称" maxlength="40" value="个人" readonly="readonly" name="buyerName"/></span></li>
+				<li><span class="n_l gray"><em>*</em>请填写个人信息</span></li>
+			</ul>
+			<ul class="list_2">
+				<li>联系电话：<span class="n_r"><input id="form_6" type="tel" class="input_1" placeholder="联系电话" maxlength="30" name="takerTel"/></span></li>
+				<li>邮箱地址：<span class="n_r"><input id="form_7" type="text" class="input_1" placeholder="接收电子发票邮箱" maxlength="40" name="takerEmail"/></span></li>
+			</ul>
+		</div>
+		<!--个人 end-->
+		
+		<!--单位 star-->
+		<div id="type_2">
+			<ul class="list_1">
+				<li>抬头：<span class="n_r"><input id="form_1" type="text" class="input_1" placeholder="发票抬头名称" maxlength="40" name="buyerName"/></span></li>
+				<li>税号：<span class="n_r"><input id="form_2" type="text" class="input_1" placeholder="正确税号" maxlength="24" name="buyerTaxpayerNum"/></span></li>
+			</ul>
+			<ul class="list_2">
+				<li>联系电话：<span class="n_r"><input id="form_3" type="tel" class="input_1" placeholder="联系电话" maxlength="30" name="takerTel"/></span></li>
+				<li>邮箱地址：<span class="n_r"><input id="form_4" type="text" class="input_1" placeholder="接收电子发票邮箱" maxlength="40" name="takerEmail"/></span></li>
+			</ul>
+		</div>
+		<!--单位 end-->	
+		<input id="tradeNoForm" type="hidden" th:value="${tradeNo}" th:name="tradeNo" />
+		<input id="parkIdForm" type="hidden" th:value="${parkId}" th:name="parkId" />
+		<input id="invoiceAmountForm" type="hidden" th:value="${invoiceAmount}" th:name="invoiceAmount" />
+		<button type="button" class="btn-action" title="确认">确认</button>
+	</section>
+	<!--表单 end-->
+	
+	<!--底部 star-->
+	<div class="foot">
+	</div>
+	<!--底部 end-->
+</div>
+<!--主体 end-->
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/tips.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+//预加载loading
+$(window).bind('DOMContentLoaded',function(){
+	//400毫秒后执行，html对象移除loading样式
+	setTimeout(function(){					
+		 $('html').removeClass('loading');
+	},400);
+});	
+
+//客户端检测
+var ua = window.navigator.userAgent.toLowerCase();
+
+//如果是微信
+if(ua.match(/MicroMessenger/i)=="micromessenger") {   
+	$(".header").hide();
+	$(".wapper").css({"marginTop":"8px"});
+
+//如果是支付宝	
+}else if(ua.indexOf("alipay")!=-1){ 
+	$(".header").hide();
+	$(".wapper").css({"marginTop":"8px"});
+//其他	
+}else{
+	$(".header").show();
+	$(".wapper").css({"marginTop":"0px"});
+
+}	
+
+//标签切换
+$(".menu span").each(function(index){
+	$(this).click(function(){	
+	    //个人	
+		if(index==0){
+			$(".menu").find("i").removeClass("checked");
+			$(".menu .m1").addClass("select");
+			$(".menu .m2").removeClass("select");
+			$("#type_1").show();
+			$("#type_2").hide();
+			$("#piao_type").val("2");
+			//默认清空
+			$("#form_6,#form_7").val("");
+
+		//单位
+		}else{
+			$(".menu").find("i").addClass("checked");
+			$(".menu .m1").removeClass("select");
+			$(".menu .m2").addClass("select");
+			$("#type_1").hide();
+			$("#type_2").show();
+			$("#piao_type").val("1");
+			//默认清空
+			$("#form_1,#form_2,#form_3,#form_4").val("");
+		}
+	})
+})
+
+
+
+
+
+//验证固话和手机
+function checkTel(tel){
+	//联系方式格式
+	var isPhone = /^\d{11}$/;
+	return isPhone.test(tel);
+	//固话格式
+	//var isPhone = /^0\d{2,3}-?\d{7,8}$/;
+	//手机格式
+	//var isMob = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;	
+    //return isPhone.test(tel) || isMob.test(tel);
+}
+
+//表单验证
+$(".btn-action").click(function(){
+	var type=$("#piao_type").val();
+
+	//抬头格式(只包含大小写英文、数字、汉字，长度在2~40之间)
+	var regex1=/^[\u4E00-\u9FA5A-Za-z0-9]{2,40}/;
+	
+	//税号格式(只包含大小写英文、数字，长度在4~24之间)
+	var regex2=/^[0-9A-Za-z]{4,24}$/;
+	
+	//邮箱格式(数字/字母/字母数字混合/带点的/带下划线/带连接线)
+	var regex3=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+	
+	switch(type){ 
+		//单位
+		case "1" : 
+			//抬头为空
+			if($('#form_1').val() == ""){
+				show_err_msg("抬头不能为空");
+				return false;
+			//抬头长度
+			}else if(!regex1.test($('#form_1').val())){
+				show_err_msg("抬头填写错误");
+				return false;
+			//税号为空
+			}else if($('#form_2').val() == ""){
+				show_err_msg("税号不能为空");
+				return false;
+			//税号格式
+			}else if(!regex2.test($('#form_2').val())){
+				show_err_msg("税号填写错误");
+				return false;
+			//电话为空	
+			}else if($('#form_3').val() == ""){
+				show_err_msg("电话不能为空");
+				return false;
+			//电话格式
+			}else if(!checkTel($('#form_3').val())){
+				show_err_msg("电话填写错误");
+				return false;
+			//邮箱为空
+			}else if($('#form_4').val() == ""){
+				show_err_msg("邮箱不能为空");
+				return false;
+			//邮箱格式
+			}else if(!regex3.test($('#form_4').val())){
+				show_err_msg("邮箱填写错误");
+				return false;	
+			}						
+		break;
+		
+		//个人
+		case "2" : 
+			//抬头为空
+			if($('#form_5').val() == ""){
+				show_err_msg("抬头不能为空");
+				return false;
+			//抬头长度
+			}else if(!regex1.test($('#form_5').val())){
+				show_err_msg("抬头填写错误");
+				return false;
+			//电话为空	
+			}else if($('#form_6').val() == ""){
+				show_err_msg("电话不能为空");
+				return false;
+			//电话格式
+			}else if(!checkTel($('#form_6').val())){
+				show_err_msg("电话填写错误");
+				return false;
+			//邮箱为空
+			}else if($('#form_7').val() == ""){
+				show_err_msg("邮箱不能为空");
+				return false;
+			//邮箱格式
+			}else if(!regex3.test($('#form_7').val())){
+				show_err_msg("邮箱填写错误");
+				return false;	
+			}			
+		break;
+	}	
+
+	
+	//单位
+	if(type=="1"){
+		//税号
+		var buyerName=$('#form_1').val();
+		
+		//抬头
+		var buyerTaxpayerNum=$('#form_2').val();
+		
+		//电话
+		var takerTel=$('#form_3').val();
+		
+		//邮箱
+		var takerEmail=$('#form_4').val();
+		
+		//类型
+		var ticket_type="1";
+	//个人
+	}else{
+		//税号
+		var buyerName="个人";
+		
+		//抬头
+		var buyerTaxpayerNum="";
+		
+		//电话
+		var takerTel=$('#form_6').val();
+		
+		//邮箱
+		var takerEmail=$('#form_7').val();		
+		
+		//类型
+		var ticket_type="2";	
+	}
+	var tradeNo = $("#tradeNoForm").val();
+	var parkId = $("#parkIdForm").val();
+	var invoiceAmount = $("#invoiceAmountForm").val();
+	var pathName = document.location.pathname;
+	//执行AJAX
+	$.ajax({
+		type:"POST",
+		url:"apply",
+		dataType:'json', 
+		data:{
+			tradeNo:tradeNo,
+			parkId:parkId,
+			buyerTaxpayerNum:buyerTaxpayerNum,
+			invoiceAmount:invoiceAmount,
+			buyerName:buyerName,
+			takerTel:takerTel,
+			takerEmail:takerEmail
+		}, 
+		timeout:8000,                             //超时超时时间（8秒）
+		//在发送请求之前调用
+		beforeSend:function () {
+			$(".load").show();
+			$(".mask").show();
+		},	
+		//成功
+		success: function (data) { 
+			location.href=pathName.substring(0,pathName.substr(1).indexOf('/')+1) + "/" + data.url + "?tradeNo=" + data.tradeNo;
+			//如果有数据
+			/*if(data.status_code=="200"){
+				setTimeout(function(){  
+					$(".load,.mask").hide();
+					//流水号
+					var serial_number=data.serial_number;
+					//url
+					var win_url="right.html?number="+serial_number; 
+					show_msg('提交成功',win_url);	
+				},200);				
+
+			//其他（异常）	
+			}else{
+				setTimeout(function(){  
+					$(".load,.mask").hide();
+					window.location.href="fail.html"; 	
+				},200);							
+			}*/
+		},
+		//失败
+		error: function (jqXHR, textStatus, errorThrown){ 	
+			if(textStatus=="timeout"){
+				$(".load,.mask").hide();
+				show_err_msg("网络超时");
+			}else{
+				$(".load,.mask").hide();
+				show_err_msg("异常重试");
+			}		
+		}			
+	})		
+		
+
+})
+</script>
+</body>
+</html>
